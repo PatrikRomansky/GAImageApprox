@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GAImageApproxUX", "GAImageApproxUX\GAImageApproxUX.csproj", "{02C43EB2-DEB4-4307-B076-3D2D6402C501}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticAlgorithmLib", "GeneticAlgorithmLib\GeneticAlgorithmLib.csproj", "{2E4E543D-1B62-472E-BC3F-3241A550B27E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02C43EB2-DEB4-4307-B076-3D2D6402C501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02C43EB2-DEB4-4307-B076-3D2D6402C501}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02C43EB2-DEB4-4307-B076-3D2D6402C501}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02C43EB2-DEB4-4307-B076-3D2D6402C501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E4E543D-1B62-472E-BC3F-3241A550B27E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E4E543D-1B62-472E-BC3F-3241A550B27E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E4E543D-1B62-472E-BC3F-3241A550B27E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E4E543D-1B62-472E-BC3F-3241A550B27E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1EB50FF-4E4B-452B-838E-C20F3735284E}
+	EndGlobalSection
+EndGlobal

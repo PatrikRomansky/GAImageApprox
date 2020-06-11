@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2E4E543D-1B62-472E-BC3F-3241A550B27E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GeneticAlgorithmLib</RootNamespace>
+    <AssemblyName>GeneticAlgorithmLib</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Emgu.CV.UI, Version=4.2.0.3662, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\packages\Emgu.CV.runtime.windows.4.2.0.3662\lib\net461\Emgu.CV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.World.NetStandard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\packages\Emgu.CV.4.2.0.3662\lib\netstandard2.0\Emgu.CV.World.NetStandard.dll</HintPath>
+    </Reference>
+    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.19.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.19.0\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
+    </Reference>
+    <Reference Include="Magick.NET.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magick.NET.Core.2.0.0\lib\net40\Magick.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.4.7.0\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph, Version=5.1.7.430, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Algorithms\Executor\ExecutorLinear.cs" />
+    <Compile Include="Algorithms\Executor\ExecutorParallel.cs" />
+    <Compile Include="Algorithms\Executor\IExecutor.cs" />
+    <Compile Include="Algorithms\GA.cs" />
+    <Compile Include="Algorithms\IGeneticAlgorithm.cs" />
+    <Compile Include="Controllers\Img\BaseControllerBitmap.cs" />
+    <Compile Include="Controllers\Img\BaseControllerLinesImg.cs" />
+    <Compile Include="Controllers\Img\ControllerBitmap.cs" />
+    <Compile Include="Controllers\Img\ControllerImage.cs" />
+    <Compile Include="Controllers\Img\ControllerLineImg.cs" />
+    <Compile Include="Controllers\Img\IControllerImage.cs" />
+    <Compile Include="Controllers\IController.cs" />
+    <Compile Include="Elitizmus\ElitizmusFitness.cs" />
+    <Compile Include="Elitizmus\ElitizmusNon.cs" />
+    <Compile Include="Elitizmus\IElitizmus.cs" />
+    <Compile Include="Fitnesses\FitnessBitmap.cs" />
+    <Compile Include="Fitnesses\FitnessLine.cs" />
+    <Compile Include="Fitnesses\IFitness.cs" />
+    <Compile Include="Genes\Gene.cs" />
+    <Compile Include="Individuals\IIndividual.cs" />
+    <Compile Include="Individuals\Individual.cs" />
+    <Compile Include="Individuals\IndividualBitmap.cs" />
+    <Compile Include="Individuals\IndividualImage.cs" />
+    <Compile Include="Individuals\IndividualLinesImg.cs" />
+    <Compile Include="Operators\IOperator.cs" />
+    <Compile Include="Operators\Mutations\IMutation.cs" />
+    <Compile Include="Operators\Mutations\Mutation.cs" />
+    <Compile Include="Operators\Mutations\MutationLine.cs" />
+    <Compile Include="Operators\Mutations\MutationLineAdaptive.cs" />
+    <Compile Include="Operators\Mutations\MutationSwap.cs" />
+    <Compile Include="Operators\Mutations\MutationTwors.cs" />
+    <Compile Include="Operators\Mutations\MutationUniform.cs" />
+    <Compile Include="Operators\Xover\IXover.cs" />
+    <Compile Include="Operators\Xover\XOver.cs" />
+    <Compile Include="Operators\Xover\XoverNon.cs" />
+    <Compile Include="Operators\Xover\XoverOnePoint.cs" />
+    <Compile Include="Operators\Xover\XoverTwoPoints.cs" />
+    <Compile Include="Operators\Xover\XoverUniform.cs" />
+    <Compile Include="Populations\IPopulation.cs" />
+    <Compile Include="Populations\Population.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Randomization\FastRandom.cs" />
+    <Compile Include="Randomization\RandomizationRnd.cs" />
+    <Compile Include="Selections\ISelection.cs" />
+    <Compile Include="Selections\SelectionElite.cs" />
+    <Compile Include="Selections\SelectionNon.cs" />
+    <Compile Include="Selections\SelectionTournament.cs" />
+    <Compile Include="Terminations\ITermination.cs" />
+    <Compile Include="Terminations\TerminationMaxNumberGeneration.cs" />
+    <Compile Include="Terminations\TerminationMaxTime.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="License-LGPL.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Emgu.CV.runtime.windows.4.2.0.3662\build\Emgu.CV.runtime.windows.targets" Condition="Exists('..\packages\Emgu.CV.runtime.windows.4.2.0.3662\build\Emgu.CV.runtime.windows.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Emgu.CV.runtime.windows.4.2.0.3662\build\Emgu.CV.runtime.windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Emgu.CV.runtime.windows.4.2.0.3662\build\Emgu.CV.runtime.windows.targets'))" />
+  </Target>
+</Project>

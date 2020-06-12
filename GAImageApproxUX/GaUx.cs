@@ -4,6 +4,7 @@ using GeneticAlgorithm.Populations;
 using GeneticAlgorithmLib.Controllers.Img;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -22,8 +23,6 @@ namespace GAImageApproxUX
         // genetic algorithm
         private GA ga;
 
-        // Problems Controllers
-        IControllerImage sampleController;
         Dictionary<string, Type> controllers = new Dictionary<string, Type>();
 
         /// <summary>
@@ -63,6 +62,7 @@ namespace GAImageApproxUX
         {
             if (buttonStartStop.Text == "START")
             {
+
                 if (configGa())
                 {
                     buttonStartStop.Text = "STOP";
@@ -110,6 +110,9 @@ namespace GAImageApproxUX
             float percentageElit, mutationPorb, xoverProb, scale;
             int popSize, paramTerm;
 
+            // problems contoller
+            IControllerImage sampleController;
+
             // try sets operators and parameters
             try
             {
@@ -131,11 +134,15 @@ namespace GAImageApproxUX
                 percentageElit = (float)numericUpDownElitizmus.Value / 100;
 
                 scale = (float)numericUpDownScale.Value;
-                sampleController.InitializeScale(scale);
+
+                var controllerName = controllers[comboBoxControllers.SelectedItem.ToString()];
+
+                sampleController = Activator.CreateInstance(controllerName) as IControllerImage;
 
                 target = imgTargetFileName.Replace("\\", "/");
+                sampleController.Initialize();
+                sampleController.InitializeScale(scale);
                 sampleController.Initialize(target);
-
 
             }
             catch(Exception ex)
@@ -219,18 +226,19 @@ namespace GAImageApproxUX
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void comboBoxControllers_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {          
             var controllerName = controllers[comboBoxControllers.SelectedItem.ToString()];
-            sampleController = Activator.CreateInstance(controllerName) as IControllerImage;
-            sampleController.Initialize();
+
+            var guiSampleController = Activator.CreateInstance(controllerName) as IControllerImage;
+            guiSampleController.Initialize();
 
             ClearComboBoxes();
 
-            comboBoxXover.Items.AddRange(sampleController.PossibleCrossovers());
-            comboBoxElitizmus.Items.AddRange(sampleController.PossibleElitizmuses());
-            comboBoxMutation.Items.AddRange(sampleController.PossibleMutations());
-            comboBoxSelection.Items.AddRange(sampleController.PossibleSelections());
-            comboBoxTermination.Items.AddRange(sampleController.PossibleTerminations());
+            comboBoxXover.Items.AddRange(guiSampleController.PossibleCrossovers());
+            comboBoxElitizmus.Items.AddRange(guiSampleController.PossibleElitizmuses());
+            comboBoxMutation.Items.AddRange(guiSampleController.PossibleMutations());
+            comboBoxSelection.Items.AddRange(guiSampleController.PossibleSelections());
+            comboBoxTermination.Items.AddRange(guiSampleController.PossibleTerminations());
 
             SetFirstItemCombobexes();
         }

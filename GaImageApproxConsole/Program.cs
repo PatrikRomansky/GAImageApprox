@@ -310,6 +310,10 @@ namespace GaImageApproxConsole
 
             consoleSampleController.ConfigGATermination(ga);
             ga.Run();
+
+
+            Console.WriteLine("EVOLVED");
+            Console.ReadKey();
         }
     }
 }

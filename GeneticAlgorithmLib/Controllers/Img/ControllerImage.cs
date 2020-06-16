@@ -264,7 +264,7 @@ namespace GeneticAlgorithmLib.Controllers.Img
         /// <param name="bestIndividual">The current best individual.</param>
         public virtual object ShowBestIndividual(IIndividual bestIndividual)
         {
-            if (GA.GenerationsNumber % 200 == 0 | GA.GenerationsNumber == 1)
+            if (GA.GenerationsNumber % 500 == 0 | GA.GenerationsNumber == 1)
             {
                 var best = bestIndividual as IndividualImage;
 

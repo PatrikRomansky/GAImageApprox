@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GAImageApproxUX", "GAImageA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticAlgorithmLib", "GeneticAlgorithmLib\GeneticAlgorithmLib.csproj", "{2E4E543D-1B62-472E-BC3F-3241A550B27E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaImageApproxConsole", "GaImageApproxConsole\GaImageApproxConsole.csproj", "{12F6B728-4185-4101-A7F1-F7C458B75C1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2E4E543D-1B62-472E-BC3F-3241A550B27E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E4E543D-1B62-472E-BC3F-3241A550B27E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E4E543D-1B62-472E-BC3F-3241A550B27E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12F6B728-4185-4101-A7F1-F7C458B75C1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12F6B728-4185-4101-A7F1-F7C458B75C1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12F6B728-4185-4101-A7F1-F7C458B75C1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12F6B728-4185-4101-A7F1-F7C458B75C1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

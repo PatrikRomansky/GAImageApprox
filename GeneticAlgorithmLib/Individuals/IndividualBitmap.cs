@@ -47,28 +47,6 @@ namespace GeneticAlgorithm.Individuals
         }
 
         /// <summary>
-        /// Gets the pixels from bitmap.
-        /// </summary>
-        /// <param name="bitmap">The bitmap.</param>
-        /// <returns>The pixels.</returns>
-        public static IList<Color> GetPixels(Bitmap bitmap)
-        {
-            var pixels = new List<Color>();
-            var width = bitmap.Width;
-            var height = bitmap.Height;
-
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    pixels.Add(bitmap.GetPixel(x, y));
-                }
-            }
-
-            return pixels;
-        }
-
-        /// <summary>
         /// Generates the gene.
         /// </summary>
         /// <param name="geneIndex">Index of the gene.</param>

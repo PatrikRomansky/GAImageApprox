@@ -31,7 +31,7 @@ namespace GeneticAlgorithm.Selections
                 var randomIndexes = RandomizationRnd.GetUniqueInts(2, 0, candidates.Count);
                 var tournamentWinner = candidates.Where((c, i) => randomIndexes.Contains(i)).OrderByDescending(c => c.Fitness).First();
 
-                selected.Add(tournamentWinner);
+                selected.Add(tournamentWinner.Clone() as IIndividual);
 
             }
 

@@ -27,20 +27,9 @@ namespace GeneticAlgorithmLib.Controllers.Img
         /// </summary>
         public override void Initialize(object target)
         {
-            var inputImageFile = (String)target;
-            var img = Image.FromFile(inputImageFile);
-
-            rawWidth = img.Width;
-            rawHeight = img.Height;
-
-            width = (int)((scale / 100) * rawWidth);
-            height = (int)((scale / 100) * rawHeight);
-
-            var targetBitmap = ScaleImage(Image.FromFile(inputImageFile), width, height);
+            var targetBitmap = this.InititializeSame(target);
 
             var fit = new FitnessLine(targetBitmap.ToImage<Gray,byte>());
-            width = fit.Width;
-            height = fit.Height;
             indSize = fit.targetBitmapLineCount;
             fitness = fit;
 

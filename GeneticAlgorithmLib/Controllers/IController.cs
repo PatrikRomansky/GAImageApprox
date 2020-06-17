@@ -82,7 +82,7 @@ namespace GeneticAlgorithm.Controllers
         /// <param name="name">Termination name</param>
         /// <param name="param"></param>
         /// <returns>The termination</returns>
-        ITermination CreateTermination(string name, int param);
+        ITermination CreateTermination(string name, object param);
 
         /// <summary>
         /// Creates the crossover.

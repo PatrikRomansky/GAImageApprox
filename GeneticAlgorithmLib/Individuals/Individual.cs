@@ -77,19 +77,6 @@ namespace GeneticAlgorithm.Individuals
         }
 
         /// <summary>
-        /// Creates a clone.
-        /// </summary>
-        /// <returns>The chromosome clone.</returns>
-        public virtual IIndividual Clone()
-        {
-            var clone = CreateNew();
-            clone.ReplaceGenes(0, GetGenes());
-            clone.Fitness = Fitness;
-
-            return clone;
-        }
-
-        /// <summary>
         /// Replaces the gene in the specified index.
         /// </summary>
         /// <param name="index">The gene index to replace.</param>
@@ -151,6 +138,16 @@ namespace GeneticAlgorithm.Individuals
         {
             Resize(Length + 1 );
             ReplaceGene(Length -1, gene);
+        }
+
+
+        object ICloneable.Clone()
+        {
+            var clone = CreateNew();
+            clone.ReplaceGenes(0, GetGenes());
+            clone.Fitness = Fitness;
+
+            return clone;
         }
     }
 }

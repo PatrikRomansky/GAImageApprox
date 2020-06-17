@@ -30,22 +30,12 @@ namespace GeneticAlgorithmLib.Controllers.Img
         /// Initializes this instance.
         /// </summary>
         public override void Initialize(object target)
-        {             
-            var inputImageFile = (String)target;
-            var img = Image.FromFile(inputImageFile);
+        {
 
-            rawWidth = img.Width;
-            rawHeight = img.Height;
 
-            width =(int) ((scale / 100) * rawWidth);
-            height = (int)((scale / 100) * rawHeight);
-
-            var targetBitmap = ScaleImage(Image.FromFile(inputImageFile), width, height);
-
+            var targetBitmap = this.InititializeSame(target);
             /// var targetBitmap = img
             var fit = new FitnessBitmap(targetBitmap);
-            width = fit.Width;
-            height = fit.Height;
             fitness = fit;
 
             base.Initialize(target);

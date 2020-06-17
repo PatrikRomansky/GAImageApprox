@@ -9,14 +9,6 @@ namespace GeneticAlgorithm.Operators.Mutations
     class MutationUniform : Mutation
     {
         /// <summary>
-        /// Initializes a new instance of uniform mutation.
-        /// </summary>
-        public MutationUniform()
-        {
-            IsOrdered = true;
-        }
-
-        /// <summary>
         /// Mutate the specified individual.
         /// </summary>
         /// <param name="individual">The individual to be mutated.</param>

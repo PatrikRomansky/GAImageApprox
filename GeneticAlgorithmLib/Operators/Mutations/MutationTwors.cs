@@ -8,13 +8,6 @@ namespace GeneticAlgorithm.Operators.Mutations
     /// </summary>
     public class MutationTwors : MutationSwap
     {
-        /// <summary>
-        /// Initializes a new instance of Twors mutation.
-        /// </summary>
-        public MutationTwors()
-        {
-            IsOrdered = true;
-        }
 
         /// <summary>
         /// Mutate the specified individual in population.

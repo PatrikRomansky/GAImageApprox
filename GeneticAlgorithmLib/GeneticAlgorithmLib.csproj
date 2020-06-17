@@ -86,7 +86,6 @@
     <Compile Include="Individuals\IndividualBitmap.cs" />
     <Compile Include="Individuals\IndividualImage.cs" />
     <Compile Include="Individuals\IndividualLinesImg.cs" />
-    <Compile Include="Operators\IOperator.cs" />
     <Compile Include="Operators\Mutations\IMutation.cs" />
     <Compile Include="Operators\Mutations\Mutation.cs" />
     <Compile Include="Operators\Mutations\MutationLine.cs" />

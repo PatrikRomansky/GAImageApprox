@@ -60,38 +60,6 @@ namespace GeneticAlgorithm.Individuals
         }
 
         /// <summary>
-        /// Gets the pixels from bitmap.
-        /// </summary>
-        /// <param name="bitmap">The bitmap.</param>
-        /// <returns>The pixels.</returns>
-        public static IList<LineSegment2D> GetTargetGenes(Image<Gray, byte> imageIn)
-        {      
-            var width = imageIn.Cols;
-            var height = imageIn.Rows;
-
-            Mat edges = new Mat();
-
-            // Edges detection
-            CvInvoke.Canny(imageIn, edges, 95, 100);
-
-            //HoughLinesP
-            LineSegment2D[] lines = CvInvoke.HoughLinesP(edges, 1, Math.PI / 180, 5, 2, 10);
-
-            /*
-            Image<Bgr, Byte> img = new Image<Bgr, Byte>(width, height, new Bgr(255, 255, 255));
-            foreach (var line in lines)
-            {
-               // var line = (LineSegment2D)g.Value;
-                CvInvoke.Line(img, line.P1, line.P2, new MCvScalar(0, 0, 0));
-            }
-            CvInvoke.Imshow("a", img);
-            CvInvoke.WaitKey();
-            */
-            // Lines in image
-            return lines;
-        }
-
-        /// <summary>
         /// Builds the bitmap from genes.
         /// </summary>
         /// <returns>The bitmap.</returns>

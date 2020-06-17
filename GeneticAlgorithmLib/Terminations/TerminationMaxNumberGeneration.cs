@@ -8,18 +8,17 @@ namespace GeneticAlgorithm.Terminations
     /// </summary>
     public class TerminationMaxNumberGeneration : ITermination
     {
-        /// <summary>
-        /// Maximum number of generation.
-        /// </summary>
-        int ExpectedGenerationsNumber { get;}
+        private int expectedMaxGeneration;
 
-        /// <summary>
-        /// Constructor termination: Maximum number of generation.
-        /// </summary>
-        /// <param name="expectedGenerationNumber">Maximum number of generation.</param>
-        public TerminationMaxNumberGeneration(int expectedGenerationNumber)
+
+        public TerminationMaxNumberGeneration()
         {
-            ExpectedGenerationsNumber = expectedGenerationNumber;
+            expectedMaxGeneration = 1000;
+        }
+
+        public void InitializeTerminationCondition(object termination)
+        {
+            expectedMaxGeneration = (int)termination;
         }
 
         /// <summary>
@@ -29,7 +28,7 @@ namespace GeneticAlgorithm.Terminations
         /// <returns>True if termination has been fulfilled, otherwise false.</returns>
         public bool IsFulfilled(IGeneticlgorithm geneticAlgorithm)
         {
-            if (geneticAlgorithm.GenerationsNumber < ExpectedGenerationsNumber)
+            if (geneticAlgorithm.GenerationsNumber < expectedMaxGeneration)
             {
                 return false;
             }

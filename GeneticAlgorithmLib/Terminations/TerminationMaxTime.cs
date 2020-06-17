@@ -13,19 +13,17 @@ namespace GeneticAlgorithm.Terminations
     /// </summary>
     class TerminationMaxTime : ITermination
     {
-        /// <summary>
-        /// Gets the execution maximum time.
-        /// </summary>
-        /// <value>The maximum time.</value>
-        public TimeSpan MaxTime { get;}
+        private TimeSpan maxTime;
 
-        /// <summary>
-        /// Constructor termination: Maximum time.
-        /// </summary>
-        /// <param name="maxTime">Expected maxmum time (sec).</param>
-        public TerminationMaxTime(int maxTime)
+        public TerminationMaxTime()
         {
-            MaxTime = new TimeSpan(0,0, maxTime);
+            this.maxTime = new TimeSpan(0, 0, 60);
+        }
+
+        public void InitializeTerminationCondition(object termination)
+        {
+            var sec = (int)termination;
+            maxTime = new TimeSpan(0, 0, sec);
         }
 
         /// <summary>
@@ -35,7 +33,7 @@ namespace GeneticAlgorithm.Terminations
         /// <returns>True if termination has been fulfilled, otherwise false.</returns>
         public bool IsFulfilled(IGeneticlgorithm geneticAlgorithm)
         {
-            if (geneticAlgorithm.TimeEvolving < MaxTime)
+            if (geneticAlgorithm.TimeEvolving < maxTime)
             {
                 return false;
             }

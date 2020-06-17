@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GeneticAlgorithm.Individuals;
 using GeneticAlgorithm.Populations;
+using ImageMagick;
 
 namespace GeneticAlgorithm.Selections
 {
@@ -10,6 +11,7 @@ namespace GeneticAlgorithm.Selections
     /// </summary>
     public class SelectionElite : ISelection
     {
+
         /// <summary>
         /// Selects the first n-individuals of a generation by fitness.
         /// </summary>

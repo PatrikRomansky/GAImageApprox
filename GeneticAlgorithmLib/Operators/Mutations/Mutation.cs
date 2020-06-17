@@ -9,11 +9,6 @@ namespace GeneticAlgorithm.Operators.Mutations
     public abstract class Mutation: IMutation
     {
         /// <summary>
-        /// Gets or sets a value indicating whether the operator is ordered (if can keep the chromosome order).
-        /// </summary>
-        public bool IsOrdered { get; protected set; }
-
-        /// <summary>
         /// Adaptation of mutation properties.
         /// </summary>
         public virtual void Adaptive() { }

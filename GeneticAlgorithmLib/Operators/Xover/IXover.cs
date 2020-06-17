@@ -9,7 +9,7 @@ namespace GeneticAlgorithm.Xover
     /// In genetic algorithms, xover is a genetic operator used to vary the programming of an individual
     /// or individuals from one generation to the next. 
     /// </summary>
-    public interface IXover:IOperator
+    public interface IXover
     {
         /// <summary>
         /// Gets the number of parents need for cross.

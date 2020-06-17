@@ -22,7 +22,6 @@ namespace GeneticAlgorithm.Operators.Xover
             this.mixProbability = 0.5f;
             ParentsNumber = 2;
             ChildrenNumber = 2;
-            IsOrdered = true;
         }
 
         /// <summary>

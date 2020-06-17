@@ -3,6 +3,7 @@ using GeneticAlgorithm.Individuals;
 using System;
 using System.Collections.Generic;
 using Emgu.CV;
+using GeneticAlgorithm.Genes;
 
 namespace GeneticAlgorithm.Fitnesses
 {
@@ -14,33 +15,29 @@ namespace GeneticAlgorithm.Fitnesses
         protected IList<LineSegment2D> targetBitmapLine;
         public int targetBitmapLineCount;
 
-        /// <summary>
-        /// Gets the width of the bitmap.
-        /// </summary>
-        /// <value>
-        /// The width of the bitmap.
-        /// </value>
-        public int Width { get; protected set; }
+        public Gene[] TargetGenes => throw new NotImplementedException();
 
-        /// <summary>
-        /// Gets the height of the bitmap.
-        /// </summary>
-        /// <value>
-        /// The height of the bitmap.
-        /// </value>
-        public int Height { get; protected set; }
+        public int TargetSize => throw new NotImplementedException();
+
+        public void Initialize(object target)
+        {
+            var imageIn = target as Image<Gray, byte>;
+            Mat edges = new Mat();
+            // Edges detection
+            CvInvoke.Canny(imageIn, edges, 95, 100);
+            //HoughLinesP
+            targetBitmapLine = CvInvoke.HoughLinesP(edges, 1, Math.PI / 180, 5, 2, 10);
+            targetBitmapLineCount = targetBitmapLine.Count;
+        }
+
 
         /// <summary>
         /// Initializes a new instance.
         /// </summary>
         /// <param name="target">The target bitmap.</param>
-        public FitnessLine(Image<Gray, byte> target)
+        public FitnessLine(object target)
         {
-            this.Width = target.Width;
-            this.Height = target.Height;
-
-            this.targetBitmapLine = IndividualShapeLine.GetTargetGenes(target);
-            this.targetBitmapLineCount = targetBitmapLine.Count;
+            Initialize(target);
         }
 
         /// <summary>
@@ -84,7 +81,7 @@ namespace GeneticAlgorithm.Fitnesses
                 fitness += LinesDifference((LineSegment2D)individual.GetGene(i).Value, targetBitmapLine[i]);
             }
 
-            return 1/(fitness +1);
+            return 1 / (fitness + 1);
         }
     }
 }

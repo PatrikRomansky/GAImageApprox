@@ -39,13 +39,15 @@ namespace GeneticAlgorithm.Elitizmus
                 return offspring;
 
             var ordered = parents.OrderByDescending(c => c.Fitness).Take(eliteIndsCount).ToList();
+            ordered.AddRange(offspring.Take(popSize - eliteIndsCount));
 
+            /*
             for (int i = 0; i < popSize - eliteIndsCount; i++)
             {
                 ordered.Add(offspring[i]);
             }
 
-
+    */
             return ordered;
         }
     }

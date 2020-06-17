@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GeneticAlgorithm.Populations;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace GaImageApproxConsole
 {
@@ -252,8 +253,19 @@ namespace GaImageApproxConsole
             return sampleController.CreateTermination(name, parameter);
         }
 
+
+        static void printInt(object i)
+        {
+            int a = (int)i;
+            Console.WriteLine(a);
+        }
+
         static void Main(string[] args)
         {
+            printInt(10);
+
+
+
             // input image
             Console.WriteLine("Input image: ");
             var inputImageFile = Console.ReadLine();

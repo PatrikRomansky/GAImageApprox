@@ -7,7 +7,7 @@ namespace GeneticAlgorithm.Mutations
     /// Defines an interface for mutation function.
     /// Mutation is a genetic operator used to maintain genetic diversity.
     /// </summary>
-    public interface IMutation:IOperator
+    public interface IMutation
     {
         /// <summary>
         /// Adaptation of mutation properties.

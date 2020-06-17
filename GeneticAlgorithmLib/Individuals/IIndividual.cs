@@ -1,11 +1,12 @@
 ﻿using GeneticAlgorithm.Genes;
+using System;
 
 namespace GeneticAlgorithm.Individuals
 {
     /// <summary>
     /// Defines an interface for an individual.
     /// </summary>
-    public interface IIndividual
+    public interface IIndividual : ICloneable
     {
         /// <summary>
         /// Gets or sets the fitness value.
@@ -18,6 +19,11 @@ namespace GeneticAlgorithm.Individuals
         /// </summary>
         /// <value>The length.</value>
         int Length { get; }
+
+        /// <summary>
+        /// Initialization all genes.
+        /// </summary>
+        void Initialize();
 
         /// <summary>
         /// Resizes the individual to the new length.
@@ -70,16 +76,5 @@ namespace GeneticAlgorithm.Individuals
         /// </summary>
         /// <returns>The new individual.</returns>
         IIndividual CreateNew();
-
-        /// <summary>
-        /// Creates a clone.
-        /// </summary>
-        /// <returns>The individualclone.</returns>
-        IIndividual Clone();
-
-        /// <summary>
-        /// Initialization genes.
-        /// </summary>
-        void Initialize();
     }
 }

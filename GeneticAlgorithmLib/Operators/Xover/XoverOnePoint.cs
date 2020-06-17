@@ -18,7 +18,6 @@ namespace GeneticAlgorithm.Operators.Xover
         {
             ParentsNumber = 2;
             ChildrenNumber = 2;
-            IsOrdered = true;
         }
 
         /// <summary>

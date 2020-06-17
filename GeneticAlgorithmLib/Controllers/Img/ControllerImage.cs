@@ -109,6 +109,24 @@ namespace GeneticAlgorithmLib.Controllers.Img
             Directory.CreateDirectory(m_destFolder);
         }
 
+
+        protected virtual Bitmap InititializeSame(object target)
+        {
+            var inputImageFile = (String)target;
+            var img = Image.FromFile(inputImageFile);
+
+            rawWidth = img.Width;
+            rawHeight = img.Height;
+
+            width = (int)((scale / 100) * rawWidth);
+            height = (int)((scale / 100) * rawHeight);
+
+            var targetBitmap = ScaleImage(Image.FromFile(inputImageFile), width, height);
+
+            return targetBitmap;
+        }
+
+
         /// <summary>
         /// Initializes possible crossoversfor this instance.
         /// </summary>
@@ -200,9 +218,12 @@ namespace GeneticAlgorithmLib.Controllers.Img
         /// <param name="name">Termination name</param>
         /// <param name="param"></param>
         /// <returns>The termination</returns>
-        public ITermination CreateTermination(string name, int param)
+        public ITermination CreateTermination(string name, object param)
         {
-            return Activator.CreateInstance(terminations[name], param) as ITermination;
+            ITermination termination = Activator.CreateInstance(terminations[name]) as ITermination;
+            termination.InitializeTerminationCondition(param);
+
+            return termination;
         }
 
         /// <summary>
@@ -270,7 +291,6 @@ namespace GeneticAlgorithmLib.Controllers.Img
 
                 using (var bitmap = best.BuildBitmap())
                 {
-
                     var img = ScaleImage(bitmap, rawWidth, rawHeight);
 
                     var fileName = m_destFolder + "/" + GA.GenerationsNumber.ToString("D10") + "_" + best.Fitness + ".png";

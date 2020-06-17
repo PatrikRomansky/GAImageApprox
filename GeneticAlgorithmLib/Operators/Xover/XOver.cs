@@ -10,7 +10,6 @@ namespace GeneticAlgorithm.Operators.Xover
     /// </summary>
     public abstract class Xover : IXover
     {
-        public bool IsOrdered { get; protected set; }
         public int ParentsNumber{ get; protected set; }
         public int ChildrenNumber { get; protected set; }
         public abstract IList<IIndividual> Cross(IList<IIndividual> parents);

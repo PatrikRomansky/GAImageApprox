@@ -7,6 +7,8 @@ namespace GeneticAlgorithm.Terminations
     /// </summary>
     public interface ITermination
     {
+        void InitializeTerminationCondition(object terminationCondition);
+
         /// <summary>
         /// Determines whether the specified genetic algorithm fulfilled the termination condition.
         /// </summary>

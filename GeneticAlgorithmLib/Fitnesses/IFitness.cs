@@ -1,4 +1,6 @@
-﻿using GeneticAlgorithm.Individuals;
+﻿using GeneticAlgorithm.Genes;
+using GeneticAlgorithm.Individuals;
+using System.ComponentModel;
 
 namespace GeneticAlgorithm.Fitnesses
 {
@@ -7,6 +9,13 @@ namespace GeneticAlgorithm.Fitnesses
     /// </summary>
     public interface IFitness
     {
+        
+        Gene[] TargetGenes { get; }
+
+        int TargetSize { get; }
+
+        void Initialize(object target);
+
         /// <summary>
         /// Performs the evaluation against the specified individual.
         /// </summary>

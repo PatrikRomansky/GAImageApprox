@@ -165,20 +165,18 @@ namespace GAImageApproxUX
             var population = new Population(popSize, sampleController.CreateIndividual);
 
             // new genetic algorithm
-            ga = new GA(population, fitness, selection, crossover, mutation, elitizmus, termination, executor);
-            ga.XoverProbability = xoverProb;
-            ga.MutationProbability = mutationPorb;
+            ga = new GA(population, fitness, selection, crossover, mutation, elitizmus, termination, executor, mutationPorb, xoverProb);
 
             // information transfer between ga/trhead and US
-            ga.GenerationInfo += delegate
+            ga.CurrentGenerationInfo += delegate
             {
-                var bestIndividual = ga.Population.BestIndividual;
+                var bestIndividual = ga.BestIndividual;
 
                 ThreadSafeServiceUX.SetControlPropertyThreadSafe(labelTime, "Text", "Time: " + ga.TimeEvolving);
                 ThreadSafeServiceUX.SetControlPropertyThreadSafe(labelFitness, "Text", "Fitness: " + bestIndividual.Fitness);
-                ThreadSafeServiceUX.SetControlPropertyThreadSafe(labelGeneration, "Text", "Generations: " + ga.Population.CurrentGenerationNumber);
+                ThreadSafeServiceUX.SetControlPropertyThreadSafe(labelGeneration, "Text", "Generations: " + ga.CurrentGenerationsNumber);
 
-                var speed = ga.TimeEvolving.TotalSeconds / ga.Population.CurrentGenerationNumber;
+                var speed = ga.TimeEvolving.TotalSeconds / ga.CurrentGenerationsNumber;
                 ThreadSafeServiceUX.SetControlPropertyThreadSafe(labelSpeed, "Text", "Speed(gen/sec): " + speed.ToString("0.0000"));
 
                 var best = sampleController.ShowBestIndividual(bestIndividual);

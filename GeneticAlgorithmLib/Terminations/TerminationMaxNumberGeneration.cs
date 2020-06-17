@@ -28,7 +28,7 @@ namespace GeneticAlgorithm.Terminations
         /// <returns>True if termination has been fulfilled, otherwise false.</returns>
         public bool IsFulfilled(IGeneticlgorithm geneticAlgorithm)
         {
-            if (geneticAlgorithm.GenerationsNumber < expectedMaxGeneration)
+            if (geneticAlgorithm.CurrentGenerationsNumber < expectedMaxGeneration)
             {
                 return false;
             }

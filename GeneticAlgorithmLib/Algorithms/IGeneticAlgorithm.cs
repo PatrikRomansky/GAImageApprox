@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Emgu.CV;
 using GeneticAlgorithm.Individuals;
 
 namespace GeneticAlgorithm.Algorithms
@@ -8,23 +9,27 @@ namespace GeneticAlgorithm.Algorithms
     /// Interface for the genetic algorithm, which describe base functionality.
     /// </summary>
     public interface IGeneticlgorithm
-    {        
+    {
+        /// <summary>
+        /// Occurs when generation ran.
+        /// </summary>
+        event EventHandler CurrentGenerationInfo;
+
+        /// <summary>
+        /// Occurs when termination reached.
+        /// </summary>
+        event EventHandler TerminationReached;
+
+
+        void HandlerInvoke(EventHandler handler);
+
+
         /// <summary>
         /// Gets the generations number.
         /// </summary>
         /// <value>The generations number.</value>
-        int GenerationsNumber { get; }
-
-        /// <summary>
-        /// Run GA.
-        /// </summary>
-        void Run();
-
-        /// <summary>
-        /// Stop GA(evolution);
-        /// </summary>
-        void Stop();
-
+        int CurrentGenerationsNumber { get; }
+        
         /// <summary>
         /// Gets the best chromosome.
         /// </summary>
@@ -36,18 +41,19 @@ namespace GeneticAlgorithm.Algorithms
         /// </summary>
         /// <value>The time evolving.</value>
         TimeSpan TimeEvolving { get; }
-        
-        /// <summary>
-        /// Pefroms crossover operator.
-        /// </summary>
-        /// <param name="parents">Parents</param>
-        /// <returns>Offspring.</returns>
-        IList<IIndividual> Cross(IList<IIndividual> parents);
 
         /// <summary>
-        /// Performs mutation operator.
+        /// Run GA.
         /// </summary>
-        /// <param name="individials">Individual.</param>
-        void Mutate(IList<IIndividual> individials);
+        void Run();
+
+        /// <summary>
+        /// Stop GA(evolution);
+        /// </summary>
+        void Stop();
+
+        void EvolveCurrentGeneration();
+
+        void InitilizatePopulation();
     }
 }

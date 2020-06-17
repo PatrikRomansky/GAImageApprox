@@ -21,15 +21,34 @@ namespace GeneticAlgorithm.Algorithms
     /// </summary>
     public class GA : IGeneticlgorithm
     {
+        protected IFitness fitness;
+
+        /// <summary>
+        ///  Operators
+        /// </summary>
+        protected IXover xover;
+        protected IMutation mutation;
+        protected ISelection selection;
+        protected ITermination termination;
+        protected IElitizmus elitizmus;
+
+        // Executor
+        protected IExecutor executor;
+
+        protected IPopulation Population;
+
+        private float xoverProbability;
+        private float mutationProbability;
+
         /// <summary>
         /// timer
         /// </summary>
-        protected Stopwatch m_stopwatch;
+        protected Stopwatch stopwatch;
         
         /// <summary>
         /// Occurs when generation ran.
         /// </summary>
-        public event EventHandler GenerationInfo;
+        public event EventHandler CurrentGenerationInfo;
 
         /// <summary>
         /// Occurs when termination reached.
@@ -37,61 +56,13 @@ namespace GeneticAlgorithm.Algorithms
         public event EventHandler TerminationReached;
 
         /// <summary>
-        /// Gets the population.
-        /// </summary>
-        /// <value>The population.</value>
-        public IPopulation Population { get; protected set; }
-
-        /// <summary>
-        /// Gets the fitness function.
-        /// </summary>
-        public IFitness Fitness { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the selection operator.
-        /// </summary>
-        public ISelection Selection { get; set; }
-
-        /// <summary>
-        /// Gets or sets the crossover operator.
-        /// </summary>
-        /// <value>The crossover.</value>
-        public IXover Xover { get; set; }
-
-        /// <summary>
-        /// Gets or sets the crossover probability.
-        /// </summary>
-        public float XoverProbability { get; set; }
-
-        /// <summary>
-        /// Gets or sets the mutation operator.
-        /// </summary>
-        public IMutation Mutation { get; set; }
-
-        /// <summary>
-        /// Gets or sets the mutation probability.
-        /// </summary>
-        public float MutationProbability { get; set; }
-
-        /// <summary>
-        /// Gets or sets the termination condition.
-        /// </summary>
-        public ITermination Termination { get; set; }
-
-        public IElitizmus Elitizmus { get; set; }
-
-        /// <summary>
-        /// Gets or sets the executor.
-        /// </summary>
-        public IExecutor Executor { get; set; }
-
-        /// <summary>
         /// Gets the generations number.
         /// </summary>
         /// <value>The generations number.</value>
-        public int GenerationsNumber
+        public int CurrentGenerationsNumber
         {
-            get => Population.CurrentGenerationNumber;
+            get;
+            protected set;
         }
 
         /// <summary>
@@ -100,7 +71,8 @@ namespace GeneticAlgorithm.Algorithms
         /// <value>The best chromosome.</value>
         public IIndividual BestIndividual
         {
-            get => Population.BestIndividual;
+            get;
+            protected set;
         }
 
         /// <summary>
@@ -108,11 +80,6 @@ namespace GeneticAlgorithm.Algorithms
         /// </summary>
         public TimeSpan TimeEvolving { get; protected set; }
 
-        /// <summary>
-        /// Constructor for genetic algorithm.
-        /// Genetic algorithms imitate natural biological processes,
-        /// </summary>
-        public GA() { }
 
         /// <summary>
         /// Constructor for genetic algorithm.
@@ -126,6 +93,8 @@ namespace GeneticAlgorithm.Algorithms
         /// <param name="elitizmus">Elitizmus.</param>
         /// <param name="termination">Termination GA.</param>
         /// <param name="executor">Executor.</param>
+        /// <param name="mutationProbability">Mutation probability.</param>
+        /// <param name="xoverProbability">Xover probability.</param>
         public GA(IPopulation population, 
                     IFitness fitness, 
                     ISelection selection, 
@@ -133,27 +102,41 @@ namespace GeneticAlgorithm.Algorithms
                     IMutation mutation, 
                     IElitizmus elitizmus, 
                     ITermination termination, 
-                    IExecutor executor)
+                    IExecutor executor,
+                    float mutationProbability,
+                    float xoverProbability)
         {
             Population = population;
-            Fitness = fitness;
-            Selection = selection;
-            Xover = xover;
-            Mutation = mutation;
-            Elitizmus = elitizmus;
-            Executor = executor;
-
-            Termination = termination;
+            this.fitness = fitness;
+            this.selection = selection;
+            this.xover = xover;
+            this.mutation = mutation;
+            this.elitizmus = elitizmus;
+            this.executor = executor;
+            this.termination = termination;
 
             // base probability
-            XoverProbability = 0.5f;
-            MutationProbability = 0.7f;
+            this.xoverProbability = xoverProbability;
+            this.mutationProbability = mutationProbability;
             TimeEvolving = TimeSpan.Zero;
-
+            CurrentGenerationsNumber = 1;
         }
 
         // termination algorithm
-        volatile bool terminationConditionReached = false;
+        protected volatile bool terminationConditionReached = false;
+
+        public void HandlerInvoke(EventHandler handler)
+        {
+            handler?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void InitilizatePopulation()
+        {
+            stopwatch = Stopwatch.StartNew();
+            Population.CreatePopulation();
+            stopwatch.Stop();
+            TimeEvolving = stopwatch.Elapsed;
+        }
 
         /// <summary>
         /// Starts the genetic algorithm using population, fitness, selection, crossover,
@@ -161,22 +144,14 @@ namespace GeneticAlgorithm.Algorithms
         /// </summary>
         public void Run()
         {
-                m_stopwatch = Stopwatch.StartNew();
-                Population.CreateInitialPopulation();
-                m_stopwatch.Stop();
-                TimeEvolving = m_stopwatch.Elapsed;
-
-            if (EndCurrentGeneration())
-            {
-                return;
-            }
+            InitilizatePopulation();
 
             do
             {
-                m_stopwatch.Restart();
-                terminationConditionReached = EvolveOneGeneration();
-                m_stopwatch.Stop();
-                TimeEvolving += m_stopwatch.Elapsed;
+                stopwatch.Restart();
+                EvolveCurrentGeneration();
+                stopwatch.Stop();
+                TimeEvolving += stopwatch.Elapsed;               
             }
             while (!terminationConditionReached);
         }
@@ -184,53 +159,33 @@ namespace GeneticAlgorithm.Algorithms
         public void Stop()
         {
             terminationConditionReached = true;
+            stopwatch.Stop();
         }
-
 
         /// <summary>
         /// Evolve one generation.
         /// </summary>
-        /// <returns>True if termination has been reached, otherwise false.</returns>
-        protected bool EvolveOneGeneration()
-        {
-            
-            var parents = SelectParents();
-            // var offspring = parents;
-            // Console.WriteLine(parents.Count);
-            var offspring = Cross(parents);
-
-            // Console.WriteLine(offspring.Count);
-            Mutate(offspring);
-
-
-            offspring = SelectElite(offspring, parents);
-
-            Population.CreateNewGeneration(offspring);
-            return EndCurrentGeneration();
-        }
-
-        /// <summary>
-        /// Ends the current generation.
-        /// </summary>
-        /// <returns><c>true</c>, if current generation was ended, <c>false</c> otherwise.</returns>
-        protected bool EndCurrentGeneration()
+        public void EvolveCurrentGeneration()
         {
             EvaluateFitness();
-            Population.EndCurrentGeneration();
+            BestIndividual = Population.GetBestIndividual();
 
-            var handler = GenerationInfo;
-            handler?.Invoke(this, EventArgs.Empty);
+            HandlerInvoke(CurrentGenerationInfo);
 
-            if (Termination.IsFulfilled(this))
+            if (termination.IsFulfilled(this))
             {
-
-                handler = TerminationReached;
-                handler?.Invoke(this, EventArgs.Empty);
-
-                return true;
+                HandlerInvoke(TerminationReached);
+                terminationConditionReached = true;
             }
 
-            return false;
+            var parents = SelectParents();
+            var offspring = Cross(parents);
+            Mutate(offspring);
+            offspring = SelectElite(offspring, parents);
+
+            Population.Individuals = offspring;    
+            
+            CurrentGenerationsNumber++;
         }
 
         /// <summary>
@@ -238,7 +193,7 @@ namespace GeneticAlgorithm.Algorithms
         /// </summary>
         protected void EvaluateFitness()
         {
-            Executor.EvaluateFitness(Fitness, Population);
+            executor.EvaluateFitness(fitness, Population);
         }
 
         /// <summary>
@@ -247,7 +202,7 @@ namespace GeneticAlgorithm.Algorithms
         /// <returns>The parents.</returns>
         protected IList<IIndividual> SelectParents()
         {
-            return Selection.SelectIndividuals(Population.Size, Population);
+            return selection.SelectIndividuals(Population.Size, Population);
         }
 
         /// <summary>
@@ -255,9 +210,9 @@ namespace GeneticAlgorithm.Algorithms
         /// </summary>
         /// <param name="parents">The parents.</param>
         /// <returns>The result individuals.</returns>
-        public IList<IIndividual> Cross(IList<IIndividual> parents)
+        protected IList<IIndividual> Cross(IList<IIndividual> parents)
         {
-            return Executor.Cross(Population, Xover, XoverProbability, parents);
+            return executor.Cross(Population, xover, xoverProbability, parents);
         }
 
         // for adaptation or termination(fitness)
@@ -267,19 +222,18 @@ namespace GeneticAlgorithm.Algorithms
         /// Mutate the specified individuals.
         /// </summary>
         /// <param name="individuals">The individuals.</param>
-        public void Mutate(IList<IIndividual> individuals)
+        protected void Mutate(IList<IIndividual> individuals)
         {
             // new best
             var fit = BestIndividual.Fitness;
-
             // compere best inds.
             if (fit != null & previuosBestFit * 1.5 <= fit)
             {
                 previuosBestFit = fit;
-                Mutation.Adaptive();
+                mutation.Adaptive();
             }
 
-            Executor.Mutate(Mutation, MutationProbability, individuals);
+            executor.Mutate(mutation, mutationProbability, individuals);
         }
 
         /// <summary>
@@ -290,7 +244,7 @@ namespace GeneticAlgorithm.Algorithms
         /// <returns>Offspring</returns>
         protected IList<IIndividual> SelectElite(IList<IIndividual> offspring, IList<IIndividual> parents) 
         {
-            return Elitizmus.EliteIndividuals(Population.Size, offspring, parents);
+            return elitizmus.EliteIndividuals(Population.Size, offspring, parents);
         }
     }
 }

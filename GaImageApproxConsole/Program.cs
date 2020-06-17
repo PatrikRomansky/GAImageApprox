@@ -292,18 +292,16 @@ namespace GaImageApproxConsole
             var population = new Population(popSize, consoleSampleController.CreateIndividual);
 
             // new genetic algorithm
-            var ga = new GA(population, fitness, selection, crossover, mutation, elitizmus, termination, executor);
-            ga.XoverProbability = xoverProb / 100; ;
-            ga.MutationProbability = mutationProb / 100; ;
+            var ga = new GA(population, fitness, selection, crossover, mutation, elitizmus, termination, executor, mutationProb / 100, xoverProb / 100);
 
-            ga.GenerationInfo += delegate
+            ga.CurrentGenerationInfo += delegate
             {
-                var bestIndividual = ga.Population.BestIndividual;
-                Console.WriteLine("Generations: {0}", ga.Population.CurrentGenerationNumber);
+                var bestIndividual = ga.BestIndividual;
+                Console.WriteLine("Generations: {0}", ga.CurrentGenerationsNumber);
                 Console.WriteLine("Fitness: {0,10}", bestIndividual.Fitness);
                 Console.WriteLine("Time: {0}", ga.TimeEvolving);
 
-                var speed = ga.TimeEvolving.TotalSeconds / ga.Population.CurrentGenerationNumber;
+                var speed = ga.TimeEvolving.TotalSeconds / ga.CurrentGenerationsNumber;
                 Console.WriteLine("Speed (gen/sec): {0:0.0000}", speed);
 
                 var best = consoleSampleController.ShowBestIndividual(bestIndividual);

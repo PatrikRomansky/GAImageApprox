@@ -285,7 +285,7 @@ namespace GeneticAlgorithmLib.Controllers.Img
         /// <param name="bestIndividual">The current best individual.</param>
         public virtual object ShowBestIndividual(IIndividual bestIndividual)
         {
-            if (GA.GenerationsNumber % 500 == 0 | GA.GenerationsNumber == 1)
+            if (GA.CurrentGenerationsNumber % 200 == 0 | GA.CurrentGenerationsNumber == 1)
             {
                 var best = bestIndividual as IndividualImage;
 
@@ -293,7 +293,7 @@ namespace GeneticAlgorithmLib.Controllers.Img
                 {
                     var img = ScaleImage(bitmap, rawWidth, rawHeight);
 
-                    var fileName = m_destFolder + "/" + GA.GenerationsNumber.ToString("D10") + "_" + best.Fitness + ".png";
+                    var fileName = m_destFolder + "/" + GA.CurrentGenerationsNumber.ToString("D10") + "_" + best.Fitness + ".png";
                  
                     img.Save(fileName);
                     return fileName;

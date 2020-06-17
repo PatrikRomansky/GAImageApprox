@@ -254,18 +254,8 @@ namespace GaImageApproxConsole
         }
 
 
-        static void printInt(object i)
-        {
-            int a = (int)i;
-            Console.WriteLine(a);
-        }
-
         static void Main(string[] args)
         {
-            printInt(10);
-
-
-
             // input image
             Console.WriteLine("Input image: ");
             var inputImageFile = Console.ReadLine();
